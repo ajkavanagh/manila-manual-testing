@@ -1,0 +1,17 @@
+_OS_PARAMS=$(env | awk 'BEGIN {FS="="} /^OS_/ {print $1;}' | paste -sd ' ')
+for param in $_OS_PARAMS; do
+    unset $param
+done
+unset _OS_PARAMS
+export OS_REGION_NAME=RegionOne
+export OS_USER_DOMAIN_ID=Default
+export OS_PROJECT_NAME=admin
+export OS_PASSWORD=openstack
+
+keystone_ip=`juju status keystone --format=oneline | cut -f 3 -d " " | tail -n 1 | tr -d '\n'`
+# for keystone v3 uncomment the following line, and comment out the line after
+#export OS_AUTH_URL=${OS_AUTH_PROTOCOL:-http}://${keystone_ip}:5000/v3
+export OS_AUTH_URL=${OS_AUTH_PROTOCOL:-http}://${keystone_ip}:5000
+export OS_USERNAME=admin
+export OS_TENANT_NAME=admin
+export OS_PROJECT_DOMAIN_NAME=Default

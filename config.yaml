@@ -1,0 +1,2 @@
+default-series: xenial
+agent-stream: devel
