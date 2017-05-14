@@ -66,19 +66,26 @@ if __name__ == '__main__':
     ep = os.environ['OS_AUTH_URL']
     if not ep.endswith('v2.0'):
         ep = "{}/v2.0".format(ep)
+    print("ep: {}".format(ep))
     auth = identity.v2.Password(username=os.environ['OS_USERNAME'],
                                 password=os.environ['OS_PASSWORD'],
                                 tenant_name=os.environ['OS_TENANT_NAME'],
                                 auth_url=ep)
     sess = session.Session(auth=auth)
+    print("Session: {}".format(sess))
     keystone = ks_client.Client(session=sess)
     keystone.auth_ref = auth.get_access(sess)
+    print("Keystone: {}".format(keystone))
     neutron_ep = keystone.service_catalog.url_for(
             service_type='network', endpoint_type='publicURL')
+    print("neutron_ep: {}".format(neutron_ep))
     neutron = client.Client(session=sess)
+    print("neutron: {}".format(neutron))
 
     # Resolve tenant id
     tenant_id = None
+    print("about to do tenants list")
+    print(keystone.tenants.list())
     for tenant in [t._info for t in keystone.tenants.list()]:
         if (tenant['name'] == (opts.tenant or os.environ['OS_TENANT_NAME'])):
             tenant_id = tenant['id']
@@ -86,6 +93,7 @@ if __name__ == '__main__':
     if not tenant_id:
         logging.error("Unable to locate tenant id for %s.", opts.tenant)
         sys.exit(1)
+    print("tenant_id: {}".format(tenant_id))
 
     networks = neutron.list_networks(name=net_name)
     if len(networks['networks']) == 0:

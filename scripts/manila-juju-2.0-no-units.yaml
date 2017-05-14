@@ -35,8 +35,6 @@ services:
   ceph-radosgw:
     charm: cs:xenial/ceph-radosgw
     num_units: 0
-    options:
-      use-embedded-webserver: true
   glance:
     charm: cs:~openstack-charmers/xenial/glance
     num_units: 0

@@ -21,4 +21,4 @@ source $OVERCLOUD
 
  # finally we want to set up a wide open the security group so we can reach the
  # instances
-./sec_groups.sh
+# ./sec_groups.sh
