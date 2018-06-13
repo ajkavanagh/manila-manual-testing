@@ -29,7 +29,7 @@ then
     wget -O $IMAGES/xenial-server-cloudimg-amd64-disk1.img \
       http://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img
   }
-  glance --os-image-api-version 1 image-create --name="xenial" \
+  glance -v -d --os-image-api-version 1 image-create --name="xenial" \
     --is-public=true --progress --container-format=bare \
     --disk-format=qcow2 < $IMAGES/xenial-server-cloudimg-amd64-disk1.img
 fi
@@ -41,7 +41,7 @@ then
     wget -O $IMAGES/manila-service-image-master.qcow2 \
       http://tarballs.openstack.org/manila-image-elements/images/manila-service-image-master.qcow2
   }
-  glance --os-image-api-version 1 image-create --name="manila-service-image" \
+  glance -v -d --os-image-api-version 1 image-create --name="manila-service-image" \
     --is-public=true --progress --container-format=bare \
     --disk-format=qcow2 < $IMAGES/manila-service-image-master.qcow2
 fi
